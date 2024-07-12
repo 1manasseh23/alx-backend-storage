@@ -1,4 +1,4 @@
---a SQL script that creates a stored procedure AddBonus that adds a new correcti
+-- a SQL script that creates a stored procedure AddBonus that adds a new correcti
 DELIMITER //
 
 CREATE PROCEDURE AddBonus(
