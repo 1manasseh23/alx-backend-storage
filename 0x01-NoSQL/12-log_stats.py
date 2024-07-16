@@ -22,5 +22,7 @@ for method in methods:
     print(f"\tmethod {method}: {count}")
 
 # Get the count of documents with method=GET and path=/status
-status_checks = collection.count_documents({"method": "GET", "path": "/status"})
+status_checks = collection.count_documents(
+        {"method": "GET", "path": "/status"}
+        )
 print(f"{status_checks} status check")
