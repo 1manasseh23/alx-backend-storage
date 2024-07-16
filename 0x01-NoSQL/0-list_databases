@@ -1,15 +1,4 @@
 #!/usr/bin/env python3
 
 // List all databases in MongoDB
-db.adminCommand({ listDatabases: 1 }).databases.forEach(db => print(db.name));
-
-// Connect to the MongoDB server
-// db = connect("mongodb://localhost:27017");
-
-// Get a list of all databases
-// var dbs = db.adminCommand({ listDatabases: 1 }).databases;
-
-// Print the name and size of each database
-// dbs.forEach(function(db) {
-  //  print(db.name + "\t" + (db.sizeOnDisk / 1024 / 1024).toFixed(3) + "GB");
-// });
+db.adminCommand({ listDatabases: 1 }).databases.forEach(db => print(db.name + "\t" + (db.sizeOnDisk / 1024 / 1024).toFixed(3) + "GB"));
