@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
+"""This a Python function that lists all documents in a collection"""
 
-# 8-all.py
 
 def list_all(mongo_collection):
     """Lists all documents in a collection."""
-    return list(mongo_collection.find())  # Return an empty list if no documents
+
+    return list(mongo_collection.find())
