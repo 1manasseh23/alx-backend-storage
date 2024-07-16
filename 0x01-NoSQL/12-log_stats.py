@@ -5,6 +5,7 @@ about Nginx logs stored in MongoDB"""
 
 from pymongo import MongoClient
 
+
 # Connect to the MongoDB database
 client = MongoClient()
 db = client['logs']
@@ -22,6 +23,7 @@ print("Methods:")
 
 for method in methods:
     count = collection.count_documents({"method": method})
+
     print(f"\tmethod {method}: {count}")
 
 
