@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+// This a script that deletes all documents with name="Holberton school" in the collection school
+db.getCollection('school').deleteMany({
+  name: "Holberton school"
+})
