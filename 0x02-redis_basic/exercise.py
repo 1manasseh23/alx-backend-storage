@@ -19,7 +19,6 @@ from functools import wraps
 def call_history(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        # Create keys for inputs and outputs
         inputs_key = f"{method.__qualname__}:inputs"
         outputs_key = f"{method.__qualname__}:outputs"
 
@@ -35,6 +34,7 @@ def call_history(method: Callable) -> Callable:
         return output
     return wrapper
 
+
 """
 def count_calls(method: Callable) -> Callable:
     @wraps(method)
@@ -48,12 +48,13 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 """
 
+
 class Cache:
     def __init__(self) -> None:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    @call_history # @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         key = str(uuid.uuid4())
         self._redis.set(key, data)
@@ -74,3 +75,26 @@ class Cache:
 
     def get_int(self, key: str) -> Optional[int]:
         return self.get(key, fn=int)
+
+
+def replay(method: Callable) -> None:
+    inputs_key = f"{method.__qualname__}:inputs"
+    outputs_key = f"{method.__qualname__}:outputs"
+
+    inputs = method.__self__._redis.lrange(inputs_key, 0, -1)
+    outputs = method.__self__._redis.lrange(outputs_key, 0, -1)
+
+    print(f"{method.__qualname__} was called {len(inputs)} times:")
+    for input_val, output_val in zip(inputs, outputs):
+        print(
+            f"{method.__qualname__}(*{input_val.decode('utf-8')}) \
+                    -> {output_val.decode('utf-8')}")
+
+
+# Example Usage
+if __name__ == "__main__":
+    cache = Cache()
+    cache.store("foo")
+    cache.store("bar")
+    cache.store(42)
+    replay(cache.store)
