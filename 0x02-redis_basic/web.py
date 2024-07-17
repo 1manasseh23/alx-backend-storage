@@ -3,7 +3,6 @@
 get_page(url: str) -> str:). The core of the function
 is very simple. It uses the requests module to obtain the
 HTML content of a particular URL and returns it.
-
 Start in a new file named web.py and do not reuse
 the code written in exercise.py
 """
