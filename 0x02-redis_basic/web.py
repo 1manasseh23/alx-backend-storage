@@ -16,12 +16,9 @@ redis_client = redis.Redis(host='localhost', port=6379)
 
 
 def cache_url_access(method):
-    """to defind the wraper function"""
-    
     @wraps(method)
     def wrapper(url: str, *args, **kwargs):
         # Track access count
-        
         count_key = f"count:{url}"
         redis_client.incr(count_key)
 
@@ -34,7 +31,6 @@ def cache_url_access(method):
 @cache_url_access
 def get_page(url: str) -> str:
     # Check if cached result exists
-    
     cache_key = f"cache:{url}"
     cached_result = redis_client.get(cache_key)
 
@@ -51,8 +47,6 @@ def get_page(url: str) -> str:
 
 
 if __name__ == "__main__":
-    """The url to fetch from"""
-    
     url = "http://httpbin.org/delay/3"  # Alternative slow URL
     print(get_page(url))  # Fetch the page
     time.sleep(1)
